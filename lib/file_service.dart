@@ -13,12 +13,12 @@ class FileService {
 
   // #endregion
 
-  Future<String?> uploadFile(String content) async {
+  Future<String?> uploadFile(List<int> bytes) async {
     try {
       var client =
           Dio(BaseOptions(baseUrl: 'https://omr-scanner-maua.herokuapp.com'));
       var body = FormData.fromMap({
-        'image': MultipartFile.fromBytes(utf8.encode(content),
+        'image': MultipartFile.fromBytes(bytes,
             filename: 'image-${DateTime.now().millisecondsSinceEpoch}.png'),
       });
       var res = await client.post('/process', data: body);
@@ -31,12 +31,12 @@ class FileService {
     }
   }
 
-  Future<String?> getFile() async {
+  Future<List<int>?> getFile() async {
     try {
       var result = await FilePicker.platform.pickFiles();
       if (result != null) {
         PlatformFile file = result.files.first;
-        return base64Encode(file.bytes!);
+        return file.bytes;
       } else {
         return null;
       }
