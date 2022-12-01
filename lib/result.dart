@@ -34,6 +34,13 @@ class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+      ),
       body: FutureBuilder(
           future: loadAsset(),
           builder: (context, snapshot) {
@@ -53,11 +60,18 @@ class _ResultPageState extends State<ResultPage> {
                       Image.memory(base64Decode(omrModel!.imageB64)),
                       Container(
                         alignment: Alignment.center,
-                        child: Text(
-                          'Resultado:\n${omrModel!.percentCorrect}%',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 48, fontWeight: FontWeight.bold),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(omrModel!.getEmoji,
+                                style: const TextStyle(fontSize: 48)),
+                            Text(
+                              'Resultado:\n${omrModel!.percentCorrect}%',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 48, fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                       ),
                     ],

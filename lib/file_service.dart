@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:omr_scanner/omr.dart';
 
 class FileService {
   // #region Singleton
@@ -13,7 +14,7 @@ class FileService {
 
   // #endregion
 
-  Future<String?> uploadFile(List<int> bytes) async {
+  Future<OMRModel?> uploadFile(List<int> bytes) async {
     try {
       var client =
           Dio(BaseOptions(baseUrl: 'https://omr-scanner-maua.herokuapp.com'));
@@ -23,7 +24,7 @@ class FileService {
       });
       var res = await client.post('/process', data: body);
       if (res.statusCode == 200) {
-        return res.data['attachment_id'];
+        return OMRModel.fromJson(res.data);
       }
       return null;
     } on DioError catch (e) {

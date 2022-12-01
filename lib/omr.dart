@@ -15,6 +15,20 @@ class OMRModel {
     return (correct / total * 100).round();
   }
 
+  String get getEmoji {
+    if (percentCorrect >= 80) {
+      return ' \u{1f929}';
+    } else if (percentCorrect >= 60) {
+      return ' \u{1f610}';
+    } else if (percentCorrect >= 40) {
+      return ' \u{2639}';
+    } else if (percentCorrect >= 20) {
+      return ' \u{1f62d}';
+    } else {
+      return ' \u{1f635}';
+    }
+  }
+
   factory OMRModel.fromJson(Map<String, dynamic> json) {
     return OMRModel(
       answers: Answer.fromList(json['answers']),
